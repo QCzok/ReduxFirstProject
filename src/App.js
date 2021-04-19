@@ -1,34 +1,21 @@
-import React, {useState} from "react";
+import React from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement, login, logout } from './actions';
 import './App.css';
 
 function App() {
-  let [counter, setCounter] = useState(0);
-  let [loggedInFlag, setLoggedInFlag] = useState(false);
+  const counter = useSelector(state => state.counter);
+  const loggedInFlag = useSelector(state => state.isLogged)
+  const dispatch = useDispatch();
 
-  const increment = () => {
-    setCounter(counter + 1);
-  }
-
-  const decrement = () => {
-    setCounter(counter - 1);
-  }
-
-  const login = () => {
-    setLoggedInFlag(true);
-  }
-
-  const logout = () => {
-    setLoggedInFlag(false);
-  }
-  console.log(loggedInFlag);
   return (
     <div className="App">
       <h1>Redux First Project</h1>
       <h2>Counter: {counter}</h2>
-      <button onClick={increment}>increment</button>
-      <button onClick={decrement}>decrement</button>
-      <button onClick={login}>Login</button>
-      <button onClick={logout}>Logout</button>
+      <button onClick={() => dispatch(increment(5))}>increment</button>
+      <button onClick={() => dispatch(decrement(5))}>decrement</button>
+      <button onClick={() => dispatch(login())}>Login</button>
+      <button onClick={() => dispatch(logout())}>Logout</button>
       {loggedInFlag ? <p>Valuable information I shoud not see without beeing logged in</p> : <p>please log in</p>}
     </div>
   );
